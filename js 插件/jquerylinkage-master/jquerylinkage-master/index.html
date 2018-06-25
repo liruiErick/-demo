@@ -1,0 +1,70 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>二级联动插件</title>
+<script src="jquery.min.js"></script>
+<script src="lockLinkage.js"></script>
+<style>
+html {font-size:16px;}
+select {margin:10px;    font-size: 16px;   padding: 6px; width:200px;}
+ul{margin:0; padding:0; float:left;}
+ul li {cursor: pointer; list-style: none; width:200px;}
+li {padding:0 10px;}
+.focus{ color:red; }
+</style>
+</head>
+
+<body>
+<div  style="clear:both; float:left;">
+<p>地区</p>
+<select id="prov"></select>
+<select id="city"></select>
+<br/>
+<ul id="provbox" style="height:300px;overflow-y:scroll">
+</ul>
+<ul id="citybox"  style="height:300px;overflow-y:scroll">
+</ul>
+</div>
+<div  style="clear:both; float:left;">
+<p>行业</p>
+<select id="pindu"></select>
+<select id="sindu"></select>
+</div>
+<script>
+$(function () {
+    /*
+	$('#prov').lockLinkage({
+    	sobj: 'city'
+    });
+    */
+    
+    $('#prov').lockLinkage({
+    	sobj : 'city',
+    	pdefval : '河北',
+    	sdefval : '秦皇岛'
+    });
+    
+    $('#provbox').lockLinkage({
+    	event : 'click',
+    	sobj : 'citybox',
+    	pdefval :  '天津',
+    	sdefval : '河西',
+    	element:'li'
+    });
+    
+    /*
+    $('#provbox').lockLinkage({
+    	event : 'click',
+    	sobj : 'citybox',
+    	element : 'li'
+    });
+    */
+    
+    $('#pindu').lockLinkage({
+    	sobj : 'sindu',
+    	url:'industry.json.js'
+    });
+});
+</script>
+</body>
+</html>
