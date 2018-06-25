@@ -1,0 +1,329 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge,chrome=1" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <title>拥有延迟加载功能的瀑布流</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <link rel="stylesheet" href="flow.css">
+    <style>
+        .body{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        .wcont{
+            border:1px solid #bababa;
+            background:#f1f1f1;
+            margin:15px;
+            padding:15px;
+        }
+        .fall_cont{
+            margin:0;
+            padding:0;
+        }
+        .fall_item{
+            font-size:13px;
+            line-height:32px;
+            background:#ffffff;
+            box-sizing:border-box;
+            padding:8px;
+            border-radius: 5px;
+        }
+        .fall_item +.fall_item{
+            margin-top:12px;
+        }
+        .fall_item img{
+            width:100%;
+        }
+        .mfall_item{
+            display: inline-block;
+            vertical-align: top;
+        }
+        .mfall_inner {
+            font-size: 0;
+            text-align: center;
+        }
+    </style>
+    <script>
+
+    </script>
+</head>
+<body>
+<div class='msheader'>
+    <div class='msheader-inner clearfix'>
+
+        <div class='mleft wdfull'>
+            <div class='msheader-slider' >
+
+            </div>
+        </div>
+        <div class='mleft mheader-menu'>
+            <a href='/' class='msheader-link '>首页</a>
+            <a href='/1.html' class='msheader-link '>文章列表</a>
+            <a href='http://www.webfront-js.com/articaldetail/79.html' class='msheader-link'>&lt;&lt;返回文章</a>
+        </div>
+
+    </div>
+</div>
+<div class='art_context2'>
+    <div class="wcont">
+        <div class="fall_cont">
+            <div class="fall_item">
+                <img src="./demo/fall1.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall2.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall3.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall4.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall5.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall1.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall2.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall3.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall4.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall5.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall1.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall2.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall3.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall4.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+            <div class="fall_item">
+                <img src="./demo/fall5.jpg"/>
+                <p>美女图片瀑布流</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        (function(_,$){
+            var defaults={
+                //瀑布流的宽度
+                it_w:280,
+                //瀑布列的间距
+                space_w:20,
+                //瀑布流的容器
+                it_cont:document.body,
+                //是否绑定resize自适应
+                auto_resize:true
+            };
+            var mwaterfall=function(options){
+                return new mwaterfall.fn.init(options);
+            };
+            mwaterfall.fn=mwaterfall.prototype={
+                init:function(options){
+                    this.set= $.extend(defaults,options);
+                    var cont=this.set.it_cont;
+                    //判断容器是否合法
+                    if(typeof cont =="string"){
+                        this.set.it_cont=$(cont);
+                    }else{
+                        if(cont.nodeType&&cont.nodeType==1){
+                            this.set.it_cont=$(cont);
+                        }else{
+                            if(cont instanceof jQuery){
+
+                            }else{
+                                throw new Error("错误！瀑布流容器缺失。");
+                                return ;
+                            }
+                        }
+                    }
+                    //判断列宽是否是数字
+                    if(typeof this.set.it_w !="number"){
+                        throw new Error("错误！瀑布流的列宽度不是数字。");
+                        return ;
+                    }
+                    var cont=this.set.it_cont;
+                    //记录瀑布流元素
+                    this.domitems=cont.children();
+                    //添加一个外包的容器
+                    this.dominner=$("<div class='mfall_inner'></div>");
+                    //清除容器内容
+                    cont.html("");
+                    //添加外包容器
+                    cont.append(this.dominner);
+                    //计算渲染瀑布流
+                    this.fillfall();
+                    //绑定resize事件
+                    if(this.set.auto_resize){
+                        this.bindresize();
+                    }
+                },
+                fillfall:function(){
+                    var th;
+                    //预加载图片后再实现瀑布流
+                    this.loadimg(function(){
+                        this.caculateColumn();
+                        this.fillColumn();
+                    });
+
+                },
+                loadimg:function(callback,appimgs){
+                    var imgarr=[],
+                        th=this,
+                        doms=appimgs||this.domitems;
+                    i=0,
+                        len=doms.length;
+                    //获取元素中所有的img对象
+                    for(;i<len;i++){
+                        var imgs=$(doms[i]).find("img");
+                        imgs.each(function(){
+                            imgarr.push(this);
+                        });
+                    }
+                    i=0,len=imgarr.length;
+                    th.imgloaded=0;
+                    th.imgTotal=len;
+                    for(;i<len;i++){
+                        var src=imgarr[i].src;
+                        var img=new Image();
+                        img.onload=function(){
+                            th.countImg(callback);
+                        };
+                        img.error=function(){
+                            th.countImg(callback);
+                        }
+                        img.src=src;
+                    }
+                },
+                //图片加载完后的回调函数
+                countImg:function(callback){
+                    this.imgloaded++;
+                    if(this.imgloaded==this.imgTotal){
+                        callback.apply(this);
+                    }
+                },
+                caculateColumn:function(){
+                    this.dominner.html("");
+                    var tw = this.dominner.innerWidth();
+
+                    var cw=this.set.it_w+this.set.space_w;
+                    var n=parseInt(tw/cw);
+
+                    if(n==0){
+                        n=1;
+                        cw=tw-this.set.space_w;
+                    }
+                    var i= 0;
+                    this.columnArr=[];
+                    for(;i<n;i++){
+                        var cdom=$("<div class='mfall_item'></div>");
+                        cdom.css({width:cw-this.set.space_w,"margin":this.set.space_w/2});
+                        this.dominner.append(cdom);
+                        this.columnArr.push(cdom);
+                    }
+
+                },
+                fillColumn:function(){
+                    var doms=this.domitems,
+                        i= 0,
+                        len=doms.length;
+
+                    for(;i<len;i++){
+                        var minColumn=this.getMinHeigtColumn();
+                        minColumn.append(doms[i]);
+                    }
+                },
+                getMinHeigtColumn:function(){
+                    var arr=this.columnArr;
+                    var mdom=arr[0];
+                    var mheight=mdom.height();
+                    var i= 1,len=arr.length;
+                    for(;i<len;i++){
+                        var tdom=arr[i];
+                        var theight=tdom.height();
+                        if(theight<mheight){
+                            mheight=theight;
+                            mdom=tdom;
+                        }
+                    }
+                    return mdom;
+                },
+                bindresize:function(){
+                    var th=this;
+                    $(window).bind("resize",function(){
+                        th.fillfall();
+                    });
+                },
+                appendfall:function(dom){
+                    this.domitems.push(dom);
+                    var minColumn=this.getMinHeigtColumn();
+                    minColumn.append(dom);
+                },
+                appendfalls:function(domarr){
+                    var i= 0,
+                        len=domarr.length;
+                    this.loadimg(function(){
+                        console.log("len:"+len);
+                        for(;i<len;i++){
+                            this.appendfall(domarr[i]);
+                        }
+                    },domarr);
+
+                }
+            };
+            mwaterfall.fn.init.prototype=mwaterfall.fn;
+            _.mwaterfall=mwaterfall;
+        }(window,jQuery));
+    </script>
+    <script>
+        var fall= mwaterfall({it_cont:".fall_cont",it_w:200});
+
+        window.onscroll=function(){
+            var arr=[];
+            for(var i=1;i<6;i++){
+                var elm=$('<div class="fall_item">\
+                    <img src="./demo/fall'+i+'.jpg"/>\
+                    <p>延迟加载的瀑布流</p>\
+                 </div>');
+                arr.push(elm);
+            }
+            var minCol=fall.getMinHeigtColumn();
+            var rect=minCol[0].getBoundingClientRect();
+            if(rect.bottom<=document.documentElement.clientHeight){
+                console.log("aaaa");
+                fall.appendfalls(arr);
+            }
+        }
+    </script>
+</div>
+</body>
+</html>
