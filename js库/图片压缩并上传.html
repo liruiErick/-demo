@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="zxx/plugins/scrollLoading/js/jquery.min.js"></script>
+</head>
+<body>
+<img src="zxx/star-img/half.png" alt="" id="imgId"/>
+<input class="hide_input" type="file" name="imageFiles" id="inputId"/>
+<script>
+    $("#inputId").change(function () {
+        var objUrl = getObjectURL(this.files[0]);
+        if (objUrl) {
+            //实现预览
+            $("#imgId").attr("src", objUrl);
+            //上传
+            uploadImage(objUrl);
+        }
+    });
+
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjectURL != undefined) { // basic
+            url = window.createObjectURL(file);
+        } else if (window.URL != undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+
+    //压缩图片
+    function compress(image) {
+        var height = image.height;
+        var width = image.width;
+        var canvas = document.createElement('canvas');
+        //height、 width 和图片实际的高、宽一致时，直接赋值canvas的宽高为上述宽高
+        canvas.width = width;
+        canvas.height = height;
+        var ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFF';//绘制背景色
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+        //0.5为压缩的质量比例，范围是0~1。
+        var imgBase = canvas.toDataURL("image/jpeg", 0.5);
+        //转成Blob对象，以ajax的方式上传
+        var formData = new FormData();
+        var arr = imgBase.split(",");
+        var mime = arr[0].match(/:(.*?);/)[1];
+        var bstr = atob(arr[1]);
+        var n = bstr.length;
+        var u8arr = new Uint8Array(n);
+        while (n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        var obj = new Blob([u8arr], {type: mime});
+        formData.append("imageFiles", obj, obj.type);
+        return formData;
+        //这里是用了toDataURL,然后再转成了blob，直接用canvas.toBlob不知道好不好使。
+    }
+
+    //上传方法
+    function uploadImage(objUrl) {
+        var image = new Image();
+        image.src = objUrl;
+        image.onload = function () {
+            var formData = new FormData();
+            //必须以这种方式获取，以JQuery的方式获取不到
+            var file = document.getElementById("inputId").files[0];
+            if (file.size > 1024 * 3) {
+                //大于1M的时候压缩
+                formData = compress(image);
+            } else {
+                formData.append("imageFiles", file, file.type);
+            }
+            //然后可以添加你所需要一起传到后台的参数
+            formData.append("paramName", "paramValue");
+            $.ajax({
+                url:"url",
+                type:"post",
+                data:formData,
+                //以下两行不能丢
+                processData: false,
+                contentType: false,
+                success:function(data){
+                },
+                error: function (data) {
+                }
+        })
+        }
+    }
+</script>
+</body>
+</html>

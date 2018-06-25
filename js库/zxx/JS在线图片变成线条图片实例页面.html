@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS在线图片变成线条图片实例页面</title>
+</head>
+<body>
+<img src="./plugins/scrollLoading/image/loading.gif" id="img" alt="">
+<p>
+    <label for="fileImg">更换图片</label>
+    <input type="file" id="fileImg" accept="image/*" style="display: none;">
+</p>
+<canvas></canvas>
+<script>
+    var eleImg = document.getElementById("img"),
+        canvas = document.querySelector('canvas');
+    /*
+    * @params source DOM 可以是图片或者视频元素
+    * */
+    var fnCannyEdge = function (source, canvas, options) {
+        options = options || {};
+        var blur_radius = options.blur_radius || 2,
+            low_threshold = options.low_threshold || 20,
+            high_threshold = options.high_threshold || 50,
+            originWidth = source.naturalWidth || source.width,
+            originHeight = source.naturalHeight || source.height,
+            maxWidth = 512, maxHeight = 512,
+            width = originWidth, height = originHeight;
+        if (originWidth > maxWidth || originHeight > maxHeight) {
+            if (originWidth / originHeight > maxWidth / maxHeight) {
+                // 更宽，按照宽度限定尺寸
+                width = maxWidth;
+                height = Math.round(maxWidth * (originHeight / originWidth));
+            } else {
+                height = maxHeight;
+                width = Math.round(maxHeight * (originWidth / originHeight));
+            }
+        }
+        var context =canvas.getContext('2d');
+        canvas.width=source.width=width;
+        canvas.height=source.height=height;
+
+    }
+</script>
+</body>
+</html>
