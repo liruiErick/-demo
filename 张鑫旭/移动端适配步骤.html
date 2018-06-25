@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>移动端适配步骤</title>
+</head>
+<body>
+  //1、HTML 的 head 部分中加入如下代码：<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  //2、HTML 中引入 一段自动适配所有窗口的 js
+  <script>
+      (function (doc,win) {
+          var docE1=doc.documentElement,
+              resizeEvt='orientationchange' in window?'orientationchange':'resize';
+              recalc=function () {
+                  var clientWidth=docE1.clientWidth;
+                  if(!clientWidth) return;
+                  docE1.style.fontSize=20*(clientWidth/320)+'px';
+              };
+           if(!doc.addEventListener) return;
+           win.addEventListener(resizeEvt,recalc,false);
+           doc.addEventListener('DOMContentLoaded',recalc,false);
+      })(document,window);
+  </script>
+ //3、CSS 中 在最开始设置 html 的 font - size ：20px；（这个 size 标准由你定）代码如下：
+  <!--html {-->
+  <!--font-size: 20px;-->
+  <!--}-->
+//4、页面 css 全部写完之后，将所有的 px 转换为以 rem 为单位的数字。例如 我设置 body 的 width ：320px； 则根据 我在第三步设置的 font - size 值，转换为 rem ，则是
+  <!--width ：16 rem； 【320 / 20 (你设置的标准 font - size) = 16】。-->
+</body>
+</html>

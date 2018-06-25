@@ -1,0 +1,182 @@
+
+<!doctype html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="description" content="文档标题自动生成锚点定位导航jQuery小插件演示页面" />
+    <meta name="description" content="张鑫旭web前端学习之文档标题自动生成锚点定位导航jQuery小插件演示页面实例页面" />
+    <meta name="keywords" content="插件,jQuery,titleNav, 锚点, 标题, 导航, 菜单" />
+    <meta name="author" content="张鑫旭,zhangxixnu" />
+    <title>文档标题自动生成锚点定位导航jQuery小插件演示页面 » 张鑫旭-鑫空间-鑫生活</title>
+    <link rel="stylesheet" href="common.css" type="text/css" />
+    <style>
+        .zxx_main_con article {
+            font-size: medium;
+        }
+        .zxx_main_con p {
+            margin: 1em 0;
+        }
+        .zxx_main_con h3 {
+            margin: 1.2em 0;
+        }
+        .zxx_main_con h4,
+        .zxx_main_con h5 {
+            font-size: 100%;
+        }
+        .zxx_main_con pre {
+            padding: .5em 1em;
+            background-color: #f3f5f9;
+            font-family: Consolas, Monaco, monospace;
+        }
+    </style>
+
+    <!-- 这是插件相关的CSS -->
+    <style>
+        .title-nav-ul {
+            width: 200px;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            box-shadow: 1px 1px 3px rgba(0,0,0,.25);
+            position: absolute;
+            top: 200px; right: 10px;
+        }
+        .title-nav-li {
+            display: block;
+            padding: 10px;
+            text-decoration: none;
+            color: inherit;
+        }
+        .title-nav-li.active {
+            font-weight: bold;
+        }
+        .title-nav-li:hover {
+            color: inherit;
+            background-color: #f0f0f0;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+<div class="zxx_out_box">
+    <div class="zxx_in_box">
+        <div class="zxx_header">
+            <a href="/">
+                <img class="l" src="/wordpress/wp-content/themes/default/images/index_logo.gif" />
+            </a>
+            <span class="zxx_author_time">by zhangxinxu 2018-04-27 23:!2</span>
+        </div>
+        <h1 class="zxx_title">自动标题导航jQuery小插件titleNav演示页面</h1>
+        <div class="tr">
+            <span class="zxx_btn"><a href="/wordpress/?p=7498">&laquo; 回到相关文章</a></span>
+        </div>
+        <div class="zxx_main_con">
+            <article>
+                <h3>一、为何叫LuLu？</h3>
+                <p>气质相符。</p>
+                <p><img src="http://qidian.gtimg.com/lulu/theme/modern/css/common/images/temp/figure.png" width="122" height="137"></p>
+                <h3>二、为什么使用LuLu？</h3>
+                <ol>
+                    <li>
+                        <h4>已迭代多年</h4>
+                        <p>始于2015年，已成功支持多个千万PV大型项目，迭代优化多年，较成熟。</p>
+                    </li>
+                    <li>
+                        <h4>上手简单</h4>
+                        <p>会简单HTML和jQuery就可以上手了，不像一些流行框架，需要较多的学习成本。</p>
+                    </li>
+                    <li>
+                        <h4>使用方式灵活</h4>
+                        <p>支持类似seajs这种模块化加载，同时也支持一个一个<code>&lt;script&gt;</code>直接加载调用。</p>
+                    </li>
+                    <li>
+                        <h4>体验和细节很棒</h4>
+                        <p>体验和细节很棒，包括：</p>
+                        <h5>①. 代码质量高</h5>
+                        <p>eslint对格式进行严格控制，同时有比较详细的注释，API命名和变量命名等至始至终风格一致，方便理解、修改与学习。</p>
+                        <h5>②. retina支持</h5>
+                        <p>所有UI组件都是支持retina显示的。主要应用了CSS生成技术，以及SVG的处理。</p>
+                        <p>且每个组件的小图标独立使用，不耦合，使用base64技术，减少无谓的额外http请求，IE7/IE8使用图片向下兼容。</p>
+                        <pre>.icon {
+background: url(test.png);
+background: url(data:image/svg+xml;base64,…), none;
+}</pre>
+                        <h5>③. 交互细腻</h5>
+                        <p>渐进增强使用CSS3 <code>animation</code>和<code>transition</code>，以较低成本增强组件交互体验。同时，兼顾<code>hover</code>延迟，弹框背景锁定，组件可视区域控制等很多细节处理。</p>
+                    </li>
+                    <li>
+                        <h4>无障碍访问支持</h4>
+                        <p>peak主题下，增加了Aria屏幕阅读设备无障碍访问以及键盘无障碍访问支持。</p>
+                    </li>
+                </ol>
+
+                <h3>三、设计理念</h3>
+                <ol>
+                    <li>
+                        <h4>面向设计开发</h4>
+                        <p>关于面向设计开发可参见这里：“<a target="_blank" href="http://www.zhangxinxu.com/wordpress/?p=4892">面向设计的半封装web组件开发</a>”。</p>
+
+                        <p>面向设计最大的特点在于能够对设计进行最完美的还原，可以很好地展现设计品质。有别于先有组件，然后再制约设计的设计策略。</p>
+                        <p>所以，LuLu UI是没有版本的概念的，只有一条核心线自己往前走。当新项目过来需要使用的时候，完全拷贝LuLu UI到项目开发目录中，然后根据当前项目的设计风格，对HTML和JS进行结构上的调整，是放心大胆的调整。</p>
+                        <p>因此，LuLu UI组件不是传统的大而全，而是走极简轻便灵活方向，表现为模块低耦合，层级扁平；API非常少，尤其一些基本组件，直接就没有API。</p>
+                        <p>LuLu UI没有版本概念，只有主题。目前有morden和peak两个主题。寓意为“现代”和“巅峰”。morden主题兼容IE7+，目前已停止维护，因为项目已经放弃对IE7的兼容；peak主题兼容IE8+，是目前持续维护和迭代的版本。</p>
+                    </li>
+                    <li>
+                        <h4>基于HTML开发</h4>
+                        <p>相对于其他UI框架，LuLu UI技术栈更偏向HTML和CSS，以便更友好地还原设计和增强体验。</p>
+                        <p>具体而言，LuLu UI基于HTML开发，实现前端开发分离，具体可参考“<a href="http://www.zhangxinxu.com/wordpress/?p=5180">顺势而为，HTML发展与UI组件设计进化</a>”。</p>
+                        <p>换句话说，开发的时候，只需要关心原生的HTML控件就可以，组件什么的不用在意。例如，时间选择，当我们选择或修改日期，就直接当组件不存在，处理原生input就好了：</p>
+                        <pre>$("input").change(function() {});</pre>
+                        <p>想要修改日期范围，很简单，直接改变原生的属性值就好了：</p>
+                        <pre>$("input").attr({
+"min": "2015-07-01",
+"max": "2015-09-01"
+});</pre>
+                        <p>组件自动就会同步，就跟原生的时间选择组件感觉一样！</p>
+                        <p>所谓UI组件，本来就应该只负责UI，跟业务没有瓜葛才对。</p>
+                        <p>LuLu中的很多UI组件都是采用这样的设计思想。</p>
+                    </li>
+                </ol>
+                <h3>四、滚动到底部我高亮</h3>
+                <p>试试看</p>
+            </article>
+        </div>
+        <div class="zxx_footer">
+            Copyright &copy; <a href="/">张鑫旭-鑫空间-鑫生活</a>
+            |
+            <a href="/wordpress/?p=7498">该篇相关文章</a>
+        </div>
+    </div>
+</div>
+
+<script src="http://libs.baidu.com/jquery/1.9.0/jquery.min.js"></script>
+<script src="jquery.titleNav.js"></script>
+<script>
+    $('h3').titleNav();
+</script>
+
+<!-- 广告与统计 -->
+<div class="zxx_ad_left shadow"><script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- 120x600, 图文广告 -->
+    <ins class="adsbygoogle"
+         style="display:inline-block;width:120px;height:600px"
+         data-ad-client="ca-pub-0090627341039040"
+         data-ad-slot="1365474761"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script></div>
+<script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-11205167-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+        var ga = document.createElement('script');
+        ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = 'http://www.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+</script>
+</body>
+</html>
